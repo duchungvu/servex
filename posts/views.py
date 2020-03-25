@@ -3,10 +3,12 @@ from .forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.views import generic
+from .models import Post
 
-
+# Create your views here.
 def index(request):
-    return render(request, 'users/base.html')
+    return render(request, 'base.html')
 
 
 def register(request):
@@ -58,6 +60,18 @@ def user_login(request):
     else:
         return render(request, 'users/login.html')
 
+class PostView(generic.DetailView):
+    model = Post
+    template_name = "posts/post.html"
+
+class PostListView(generic.ListView):
+    template_name = 'blog/postlist.html'
+    context_object_name = 'post_list'
+
+    def get_queryset(self):
+        return Post.objects.all()
 
 
-    
+
+
+

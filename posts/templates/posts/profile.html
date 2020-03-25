@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> Profile Page </h1>
+<p>Username: {{ user.username }}</p>
+<p>Ratings: {{ user.userprofile.ratings }}</p>
+<p>First skill: {{ user.userprofile.first_skill }}</p>
+<p>Second skill: {{ user.userprofile.second_skill }}</p>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Here is the list of post</p>
+{% if post_list %}
+    <ul>
+    {% for post in post_list %}
+    <li>Post number {{ post.post_id }}</li>
+    <a href="{% url 'blog:post' post.id %}">View details</a>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

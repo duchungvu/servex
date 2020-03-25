@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block body_block %}
 <h1>{{ post.title }}</h1>
+<p>Seeker: {{ post.seeker }}</p>
 <p>{{ post.description }}</p>
 {% endblock %}

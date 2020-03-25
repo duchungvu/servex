@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% block content %}
+{% block body_block %}
 <h1> Profile Page </h1>
 <p>Username: {{ user.username }}</p>
-<p>Ratings: {{ user.userprofile.ratings }}</p>
-<p>First skill: {{ user.userprofile.first_skill }}</p>
-<p>Second skill: {{ user.userprofile.second_skill }}</p>
+<p>DOB: {{ user.userprofile.date_of_birth }}</p>
+<p>Has Skill: {{ user.userprofile.has_skill }}</p>
 {% endblock %}

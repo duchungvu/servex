@@ -17,8 +17,13 @@
         <hr />
         <div>
             <ul>
-                <li><a href="{% url 'register' %}">Sign Up</a></li>
-                <li><a href="{% url 'login' %}">Login</a><li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Your Profile</a></li>
+                    <li><a href="{% url 'posts:post-list' %}">Home</a></li>
+                {% else %}
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </div>
     </body>

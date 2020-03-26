@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block body_block %}
+<p><a href="{% url 'posts:post-create' %}">Create a new post</a></p>
 <p>Here is the list of post</p>
 {% if post_list %}
     <ul>
     {% for post in post_list %}
-    <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a> </li>
+    <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a></li>
     {% endfor %}
     </ul>
 {% endif %}

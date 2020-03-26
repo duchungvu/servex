@@ -2,6 +2,8 @@
 
 {% block body_block %}
 <h1>{{ post.title }}</h1>
-<p>Seeker: {{ post.seeker }}</p>
-<p>{{ post.description }}</p>
+<p>Seeker: <a href="{% url 'profile' post.seeker.id %}">{{ post.seeker }}</a></p>
+<p>Description:</p>
+<p style ="white-space: pre-wrap;"> {{ post.description }}</p>
+<p>Status: {{ post.status }}</p>
 {% endblock %}

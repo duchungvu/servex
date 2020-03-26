@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    <h1>Create a new Post</h1>
+    {% if user.is_authenticated %}
+    <strong>Create post here!</strong><br />
+    <form id="post_form" method="post" action="{% url 'posts:post-create' %}" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        {{ post_form.as_p }}
+
+    <input type="submit" name="submit" value="Create post" />
+    </form>
+    {% else %}
+        <strong>Please log in first!</strong><br />
+    {% endif %}
+{% endblock %}
+    

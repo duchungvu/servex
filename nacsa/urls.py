@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from posts import views
+from django.contrib.auth.views import LogoutView
+from . import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +26,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('posts/', include('posts.urls')),
-    path('profile', views.ProfileView.as_view(), name='profile')
+    path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
+    path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
 ]

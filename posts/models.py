@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.urls import reverse
+
 
 class Skill(models.Model):
     title = models.CharField(max_length=200,default="Just another skill")
@@ -21,6 +23,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_absolute_url(self):
+        return reverse('profile', args=[str(self.id)])
+
 
 STATUS_CHOICES = [
     ("AC", "ACCEPTED"),
@@ -37,12 +42,12 @@ class Post(models.Model):
         choices=STATUS_CHOICES,
         default='PE'
     )
-    point = models.IntegerField(default=0)
+    points = models.IntegerField(default=0)
     seeker = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     req_skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.description
+        return self.title
 
 
 class Application(models.Model):
@@ -53,9 +58,6 @@ class Application(models.Model):
         choices=STATUS_CHOICES,
         default='PE'
     )
-
-
-
 
 
 class Review(models.Model):

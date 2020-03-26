@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block body_block %}
+{% for post in post_list|slice:":1" %}
 <h1> Profile Page </h1>
-<p>Username: {{ user.username }}</p>
-<p>DOB: {{ user.userprofile.date_of_birth }}</p>
-<p>Has Skill: {{ user.userprofile.has_skill }}</p>
+<p>Username: {{ post.seeker }}</p>
+<p>DOB: {{ post.seeker.date_of_birth }}</p>
+<p>Has Skill: {{ post.seeker.has_skill }}</p>
+{% endfor %}
 {% endblock %}

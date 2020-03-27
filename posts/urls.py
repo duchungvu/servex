@@ -7,5 +7,7 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name='post-list'),
     path('post/<int:pk>', views.PostView.as_view(), name='post'),
     path('create/', views.create_post, name='post-create'),
-    path('apply/<int:post_id>/', views.create_application, name='apply')
+    path('apply/post<int:post_id>/', views.create_application, name='apply'),
+    path('applications/post<int:pk>', views.ApplicationView.as_view(), name='applications'),
+    path('applications/application<int:application_id>/post<int:post_id>', views.choose_applications, name='chosen')
 ]

@@ -23,7 +23,3 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
 
-class ApplicationForm(forms.ModelForm):
-    class Meta:
-        model = Application
-        fields = ('post',)

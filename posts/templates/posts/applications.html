@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+<h1>Applications for {{ post.title }}</h1>
+{% if giver %}
+    <p>{{ giver }} has accepted your request</p>
+{% else %}
+    {% for application in application_list %}
+    <ul>
+        <li>Giver: {{ application.giver }}</li>
+        <a href="{% url 'posts:chosen' application.id post.id%}">Accept</a>
+    </ul>
+    {% endfor %}
+{% endif %}
+{% endblock %}

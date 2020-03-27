@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import UserForm, UserProfileForm, PostForm, ApplicationForm
+from .forms import UserForm, UserProfileForm, PostForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -122,15 +122,49 @@ class ProfileView(generic.ListView):
         target_profile = get_object_or_404(UserProfile, pk = id)
         return Post.objects.filter(seeker=target_profile)
 
+
 class ApplicationView(generic.ListView):
     model = Application
-    template_name = "posts/my_application"
+    template_name = "posts/applications.html"
     context_object_name = 'application_list'
 
     def get_queryset(self):
         id = self.kwargs['pk']
         target_post = get_object_or_404(Post, pk = id)
         return Application.objects.filter(post=target_post)
+    
+    def get_context_data(self, **kwargs):
+        context = super(ApplicationView, self).get_context_data(**kwargs)
+        id = self.kwargs['pk']
+        target_post = get_object_or_404(Post, pk = id)
+        context['post'] = target_post
+        accepted = Application.objects.filter(post=target_post, status='ACCEPTED')
+        if accepted:
+            context['giver'] = accepted[0].giver
+        return context
+
+    
+def choose_applications(request, post_id, application_id):
+    accepted = Application.objects.get(id=application_id)
+    if request.user:
+        current_post = Post.objects.get(pk=post_id)
+        application_list = Application.objects.filter(post=current_post)
+        for application in application_list:
+            if application == accepted:
+                print(application)
+                application.status = "ACCEPTED"
+            else:
+                application.status = "DECLINED"
+            application.save()
+        seeker = accepted.post.seeker
+        seeker.accept_application(current_post)
+        seeker.save()
+    print(accepted)
+    return render(
+        request, 
+        "posts/index.html", 
+        {'giver' : accepted})
+
         
 
 

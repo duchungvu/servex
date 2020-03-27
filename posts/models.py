@@ -36,11 +36,15 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def can_accept_application(self, post):
         return self.points >= post.points
 
+    def accept_application(self, post):
+        self.points -= post.points
+        post.status == "ACCEPTED"
+
     def can_create_post(self, post):
         return self.points >= post.points
 
-    def accept_application(self, post):
-        self.points -= post.points
+    def can_apply_post(self, post):
+        return self.points >= post.points and self.has_skill == post.req_skill
 
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])

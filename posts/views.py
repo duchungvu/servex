@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import UserForm, UserProfileForm, PostForm
+from .forms import UserForm, UserProfileForm, PostForm, ApplicationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -85,6 +85,18 @@ def create_post(request):
         {'post_form': post_form})
 
 
+def create_application(request, post_id):
+    if request.user: 
+        giver = request.user.userprofile
+        current_post = Post.objects.get(pk=post_id)
+        seeker = current_post.seeker
+        if seeker.can_accept_application(post=current_post):
+            application = Application.objects.create(post=current_post, giver=giver, status="PENDING")
+            application.save()
+            current_post.status="ACCEPTED"
+        else:
+            print("cant")
+    return render(request, 'posts/apply.html')
 
 
 class PostView(generic.DetailView):

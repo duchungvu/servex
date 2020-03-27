@@ -2,12 +2,12 @@
 
 {% block body_block %}
 <h1>{{ post.title }}</h1>
+
+<p><a >View application for this one</a></p>
 <p>Seeker: <a href="{% url 'profile' post.seeker.id %}">{{ post.seeker }}</a></p>
-<p>Description:</p>
-<p style ="white-space: pre-wrap;"> {{ post.description }}</p>
+<p>Description: {{ post.description }}</p>
 <p>Require skill: {{ post.req_skill }}</p>
 <p>Status: {{ post.status }}</p>
 <p>Reward point: {{ post.points }}</p>
-
-<input type="submit" value="I will help you!">
+<strong><a href="{% url 'posts:apply' post.id %}">I want to help!</a></strong>
 {% endblock %}

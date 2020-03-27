@@ -20,10 +20,13 @@ class UserProfile(models.Model):
     points = models.IntegerField(default=0)
     has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
 
-    def can_accept_post(self, post):
+    def can_accept_application(self, post):
         return self.points >= post.points
 
-    def accept_post(self, post):
+    def can_create_post(self, post):
+        return self.points >= post.points
+
+    def accept_application(self, post):
         self.points -= post.points
 
     def __str__(self):
@@ -64,6 +67,9 @@ class Application(models.Model):
         choices=STATUS_CHOICES,
         default='PENDING'
     )
+
+    def _str_(self):
+        return self.post
 
 
 class Review(models.Model):

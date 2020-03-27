@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import UserProfile, Post
+from .models import UserProfile, Post, Application
 from django import forms
 from django.forms.widgets import DateInput
 
@@ -22,3 +22,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ('post',)

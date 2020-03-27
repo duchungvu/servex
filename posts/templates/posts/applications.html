@@ -5,11 +5,15 @@
 {% if giver %}
     <p>{{ giver }} has accepted your request</p>
 {% else %}
-    {% for application in application_list %}
-    <ul>
-        <li>Giver: {{ application.giver }}</li>
-        <a href="{% url 'posts:chosen' application.id post.id%}">Accept</a>
-    </ul>
-    {% endfor %}
+    {% if application_list %}
+        {% for application in application_list %}
+        <ul>
+            <li>Giver: {{ application.giver }}</li>
+            <a href="{% url 'posts:chosen' application.id post.id%}">Accept</a>
+        </ul>
+        {% endfor %}
+    {% else %}
+        There is no application yet
+    {% endif %}
 {% endif %}
 {% endblock %}

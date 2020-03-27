@@ -85,14 +85,8 @@ class PostListView(generic.ListView):
 
 
 class ProfileView(generic.ListView):
-    model = Post
+    model = UserProfile
     template_name = "posts/profile.html"
-    context_object_name = 'post_list'
-
-    def get_queryset(self):
-        id = self.kwargs['pk']
-        target_profile = get_object_or_404(UserProfile, pk = id)
-        return Post.objects.filter(seeker=target_profile)
 
 
 class ApplicationView(generic.ListView):

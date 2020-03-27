@@ -2,7 +2,6 @@
 
 {% block body_block %}
 <h1>{{ post.title }}</h1>
-
 <p>Seeker: <a href="{% url 'profile' post.seeker.id %}">{{ post.seeker }}</a></p>
 <p>Description: {{ post.description }}</p>
 <p>Require skill: {{ post.req_skill }}</p>

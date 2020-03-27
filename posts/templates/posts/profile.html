@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block body_block %}
-{% for post in post_list|slice:":1" %}
 <h1> Profile Page </h1>
-<p>Username: {{ post.seeker }}</p>
-<p>DOB: {{ post.seeker.date_of_birth }}</p>
-<p>Has Skill: {{ post.seeker.has_skill }}</p>
-<p>Current Points: {{ post.seeker.points }}</p>
-{% endfor %}
+<p>Username: {{ user }}</p>
+<p>DOB: {{ user.date_of_birth }}</p>
+<p>Has Skill: {{ user.has_skill }}</p>
+<p>Current Points: {{ user.points }}</p>
 {% endblock %}

@@ -13,7 +13,7 @@ from django.forms import ModelForm
 class UserProfileCreationForm(UserCreationForm):
     class Meta:
         model = UserProfile
-        fields = ('username', 'email', 'first_name', 'last_name', 'has_skill')
+        fields = ('username', 'email', 'first_name', 'last_name', 'date_of_birth', 'has_skill')
         widgets = {
             'date_of_birth': DateInput(attrs={'type': 'date'})
         }

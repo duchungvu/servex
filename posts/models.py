@@ -25,7 +25,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
 
     date_of_birth = models.DateField(default=date(1970, 1, 1))
-    points = models.IntegerField(default=0)
+    points = models.IntegerField(default=100)
     has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'username'
@@ -34,17 +34,17 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
 
     def can_accept_application(self, post):
-        return self.points >= post.points
+        return self == post.seeker and self.points >= post.points
 
     def accept_application(self, post):
         self.points -= post.points
-        post.status == "ACCEPTED"
+        post.status == 'ACCEPTED'
 
     def can_create_post(self, post):
-        return self.points >= post.points
+        return self == post.seeker and self.points >= post.points
 
     def can_apply_post(self, post):
-        return self.points >= post.points and self.has_skill == post.req_skill
+        return self != post.seeker and self.points >= post.points and self.has_skill == post.req_skill
 
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])

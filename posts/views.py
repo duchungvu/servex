@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .forms import UserProfileCreationForm, PostCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
@@ -41,6 +41,12 @@ def user_login(request):
         return render(request, 'users/login.html')
 
 
+def user_logout(request):
+    if request.user:
+        logout(request)
+    return render(request, 'users/login.html')
+
+
 class CreatePostView(LoginRequiredMixin, generic.CreateView):
     form_class = PostCreationForm
     success_url = reverse_lazy('posts:post-list')
@@ -53,15 +59,15 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
 
 def create_application(request, post_id):
     if request.user: 
-        giver = request.user.userprofile
+        giver = request.user
         current_post = Post.objects.get(pk=post_id)
         seeker = current_post.seeker
-        if seeker.can_accept_application(post=current_post):
+        if seeker.can_accept_application(post=current_post) and giver.can_apply_post(post=current_post):
             application = Application.objects.create(post=current_post, giver=giver, status="PENDING")
             application.save()
-            current_post.status="ACCEPTED"
         else:
-            print("cant")
+            print("Seeker points: {0}, Post points: {1}, Giver points: {2}".format(seeker.points, current_post.points, giver.points))
+            return HttpResponse("Invalid points")
     return render(request, 'posts/apply.html')
 
 
@@ -125,11 +131,10 @@ def choose_applications(request, post_id, application_id):
         seeker = accepted.post.seeker
         seeker.accept_application(current_post)
         seeker.save()
-    print(accepted)
     return render(
         request, 
-        "posts/index.html", 
-        {'giver' : accepted})
+        "posts/applications.html",
+        {'giver' : accepted.giver})
 
         
 

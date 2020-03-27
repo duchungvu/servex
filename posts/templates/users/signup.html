@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_block %}
+    Sign Up
+{% endblock %}
+
+{% block body_block %}
+    <h1>Sign Up for Nacsa</h1>
+    {% if registered %}
+        <strong>Thank you for signing up!</strong>
+        <a href="{% url 'index' %}">Return to the homepage.</a><br />
+    {% else %}
+        <strong>Sign Up here!</strong><br />
+        <form id="user_form" method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" name="submit" value="signup" />
+    </form>
+    {% endif %}
+{% endblock %}
+    

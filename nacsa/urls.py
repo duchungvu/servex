@@ -23,7 +23,7 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('register/', views.register, name='register'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
     path('login/', views.user_login, name='login'),
     path('posts/', include('posts.urls')),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),

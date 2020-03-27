@@ -1,12 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import UserForm, UserProfileForm, PostForm
+from .forms import UserProfileCreationForm, PostCreationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from .models import Post, UserProfile, Application
-from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -15,33 +14,10 @@ def index(request):
                 {'userprofile' : UserProfile.objects.all()})
 
 
-def register(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
-
-            registered = True
-        else:
-            print(user_form.errors, profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-    
-    return render(request,
-                'users/register.html',
-                {'user_form': user_form,
-                'profile_form': profile_form,
-                'registered': registered})
+class SignUpView(generic.CreateView):
+    form_class = UserProfileCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'users/signup.html'
 
 
 def user_login(request):
@@ -65,24 +41,14 @@ def user_login(request):
         return render(request, 'users/login.html')
 
 
-def create_post(request):
-    if request.user and request.method == 'POST':
-        post_form = PostForm(data=request.POST)
-       
-        if post_form.is_valid():
-            seeker = request.user.userprofile
-            post = post_form.save(commit=False)
-            post.seeker = seeker
-            post.save()
-            return HttpResponseRedirect(reverse('posts:post-list'))
-        else:
-            print(post_form.errors)
-    else:
-        post_form = PostForm()
+class CreatePostView(LoginRequiredMixin, generic.CreateView):
+    form_class = PostCreationForm
+    success_url = reverse_lazy('posts:post-list')
+    template_name = 'posts/post_form.html'
 
-    return render(request, 
-        'posts/post_form.html',
-        {'post_form': post_form})
+    def form_valid(self, form):
+        form.instance.seeker = self.request.user
+        return super().form_valid(form)
 
 
 def create_application(request, post_id):

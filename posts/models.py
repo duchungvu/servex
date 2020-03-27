@@ -1,7 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, PermissionsMixin, AbstractBaseUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.utils import timezone
+from datetime import date
+from .managers import UserProfileManager
 
 
 class Skill(models.Model):
@@ -11,14 +15,23 @@ class Skill(models.Model):
     def __str__(self):
         return self.title
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE
-    )
-    date_of_birth = models.DateField(default=0)
+class UserProfile(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=20, unique=True, default='username')
+    first_name = models.CharField(max_length=20, default='First')
+    last_name = models.CharField(max_length=20, default='Last')
+    email = models.EmailField(_('email address'), unique=True, default='email address')
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+
+    date_of_birth = models.DateField(default=date(1970, 1, 1))
     points = models.IntegerField(default=0)
-    has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    objects = UserProfileManager()
 
     def can_accept_application(self, post):
         return self.points >= post.points
@@ -29,11 +42,11 @@ class UserProfile(models.Model):
     def accept_application(self, post):
         self.points -= post.points
 
-    def __str__(self):
-        return self.user.username
-
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])
+
+    def __str__(self):
+        return self.username
 
 
 STATUS_CHOICES = [

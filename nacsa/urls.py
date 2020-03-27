@@ -27,5 +27,5 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('posts/', include('posts.urls')),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
-    path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
+    path('logout/', views.user_logout, name='logout')
 ]

@@ -20,6 +20,7 @@
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'profile' user.id %}">Your Profile</a></li>
                     <li><a href="{% url 'posts:post-list' %}">Home</a></li>
+                    <li><a>My Application</a></li>
                     <li><a href="{% url 'logout' %}"></a>Log out</li>
                 {% else %}
                     <li><a href="{% url 'register' %}">Sign Up</a></li>

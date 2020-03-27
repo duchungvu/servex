@@ -28,9 +28,9 @@ class UserProfile(models.Model):
 
 
 STATUS_CHOICES = [
-    ("AC", "ACCEPTED"),
-    ("PE", "PENDING"),
-    ("DE", "DECLINED"),
+    ("ACCEPTED", "ACCEPTED"),
+    ("PENDING", "PENDING"),
+    ("DECLINED", "DECLINED"),
 ]
 
 
@@ -38,9 +38,9 @@ class Post(models.Model):
     title= models.CharField(max_length=200, default="Just another post")
     description = models.TextField(max_length=200, help_text="Describe your need.")
     status = models.CharField(
-        max_length=2,
+        max_length=8,
         choices=STATUS_CHOICES,
-        default='PE'
+        default='PENDING'
     )
     points = models.IntegerField(default=0)
     seeker = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -54,9 +54,9 @@ class Application(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     giver = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     status = models.CharField(
-        max_length=2,
+        max_length=8,
         choices=STATUS_CHOICES,
-        default='PE'
+        default='PENDING'
     )
 
 

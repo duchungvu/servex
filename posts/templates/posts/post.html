@@ -5,5 +5,9 @@
 <p>Seeker: <a href="{% url 'profile' post.seeker.id %}">{{ post.seeker }}</a></p>
 <p>Description:</p>
 <p style ="white-space: pre-wrap;"> {{ post.description }}</p>
+<p>Require skill: {{ post.req_skill }}</p>
 <p>Status: {{ post.status }}</p>
+<p>Reward point: {{ post.points }}</p>
+
+<input type="submit" value="I will help you!">
 {% endblock %}

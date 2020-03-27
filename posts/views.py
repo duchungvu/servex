@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views import generic
-from .models import Post, UserProfile
+from .models import Post, UserProfile, Application
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -110,14 +110,16 @@ class ProfileView(generic.ListView):
         target_profile = get_object_or_404(UserProfile, pk = id)
         return Post.objects.filter(seeker=target_profile)
 
+class ApplicationView(generic.ListView):
+    model = Application
+    template_name = "posts/my_application"
+    context_object_name = 'application_list'
 
-class PostCreate(LoginRequiredMixin, generic.CreateView):
-    model = Post
-    fields = ['title', 'description', 'points', 'req_skill']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        target_post = get_object_or_404(Post, pk = id)
+        return Application.objects.filter(post=target_post)
+        
 
 
 

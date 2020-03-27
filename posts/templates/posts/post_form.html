@@ -14,10 +14,10 @@
         {% csrf_token %}
         {{ post_form.as_p }}
 
-    <input type="submit" name="submit" value="Create post" />
+    <input type="submit" name="submit" value="Create post"/>
     </form>
     {% else %}
-        <strong>Please log in first!</strong><br />
+        <strong>Please log in first!</strong><br/>
     {% endif %}
 {% endblock %}
     

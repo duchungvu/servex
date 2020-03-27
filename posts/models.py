@@ -7,7 +7,7 @@ from django.urls import reverse
 class Skill(models.Model):
     title = models.CharField(max_length=200,default="Just another skill")
     description = models.CharField(max_length=200, default="Just another skill")
-
+    
     def __str__(self):
         return self.title
 
@@ -19,6 +19,12 @@ class UserProfile(models.Model):
     date_of_birth = models.DateField(default=0)
     points = models.IntegerField(default=0)
     has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+
+    def can_accept_post(self, post):
+        return self.points >= post.points
+
+    def accept_post(self, post):
+        self.points -= post.points
 
     def __str__(self):
         return self.user.username
@@ -45,7 +51,7 @@ class Post(models.Model):
     points = models.IntegerField(default=0)
     seeker = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     req_skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.title
 

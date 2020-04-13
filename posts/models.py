@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, PermissionsMixin, AbstractBaseUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils import timezone
@@ -34,17 +35,24 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
 
     def can_accept_application(self, post):
+        print(self == post.seeker)
         return self == post.seeker and self.points >= post.points
 
+    # for seeker
     def accept_application(self, post):
         self.points -= post.points
+        post.status == 'ACCEPTED'
+
+    # for giver
+    def accept_job(self, post):
+        self.points += post.points
         post.status == 'ACCEPTED'
 
     def can_create_post(self, post):
         return self == post.seeker and self.points >= post.points
 
     def can_apply_post(self, post):
-        return self != post.seeker and self.points >= post.points and self.has_skill == post.req_skill
+        return self != post.seeker and post.seeker.points >= post.points and self.has_skill == post.req_skill
 
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])
@@ -61,7 +69,7 @@ STATUS_CHOICES = [
 
 
 class Post(models.Model):
-    title= models.CharField(max_length=200, default="Just another post")
+    title= models.CharField(max_length=40, default="Just another post")
     description = models.TextField(max_length=200, help_text="Describe your need.")
     status = models.CharField(
         max_length=8,

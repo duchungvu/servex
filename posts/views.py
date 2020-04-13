@@ -59,14 +59,17 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
 
 def create_application(request, post_id):
     if request.user: 
-        giver = request.user
+        current_giver = request.user
         current_post = Post.objects.get(pk=post_id)
         seeker = current_post.seeker
-        if seeker.can_accept_application(post=current_post) and giver.can_apply_post(post=current_post):
-            application = Application.objects.create(post=current_post, giver=giver, status="PENDING")
-            application.save()
+        if seeker.can_accept_application(post=current_post) and current_giver.can_apply_post(post=current_post):
+            if Application.objects.filter(giver=current_giver).count() < 1:
+                application = Application.objects.create(post=current_post, giver=current_giver, status="PENDING")
+                application.save()
+            else:
+                return HttpResponse("You have already applied for a post")
         else:
-            print("Seeker points: {0}, Post points: {1}, Giver points: {2}".format(seeker.points, current_post.points, giver.points))
+            print("Seeker points: {0}, Post points: {1}, Giver points: {2}".format(seeker.points, current_post.points, current_giver.points))
             return HttpResponse("Invalid points")
     return render(request, 'posts/apply.html')
 
@@ -111,9 +114,11 @@ class ApplicationView(generic.ListView):
 
     
 def choose_applications(request, post_id, application_id):
+    # the chosen application
     accepted = Application.objects.get(id=application_id)
     if request.user:
         current_post = Post.objects.get(pk=post_id)
+        # Change status of all application for this post
         application_list = Application.objects.filter(post=current_post)
         for application in application_list:
             if application == accepted:
@@ -122,9 +127,17 @@ def choose_applications(request, post_id, application_id):
             else:
                 application.status = "DECLINED"
             application.save()
+        # change points for seeker
         seeker = accepted.post.seeker
         seeker.accept_application(current_post)
         seeker.save()
+        # change point for giver
+        giver = accepted.giver
+        giver.accept_job(current_post)
+        giver.save()
+        # change post status
+        accepted.post.status = "ACCEPTED"
+        accepted.post.save()
     return render(
         request, 
         "posts/applications.html",

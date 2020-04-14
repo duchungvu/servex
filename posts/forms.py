@@ -45,3 +45,4 @@ class PostCreationForm(ModelForm):
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
 
+

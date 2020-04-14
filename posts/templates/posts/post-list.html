@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block body_block %}
+
 <p><a href="{% url 'posts:post-create' %}">Create a new post</a></p>
 <p>Here is the list of post</p>
 {% if post_list %}
@@ -10,5 +11,9 @@
     {% endfor %}
     </ul>
 {% endif %}
-
+<p>You can search for a post here:</p>
+<form action="{% url 'posts:search-result' %}" method=get> 
+    
+    <input name="q" type="text" placeholder="Search here">
+</form>
 {% endblock %}

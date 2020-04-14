@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+<h1>Search result</h1>
+<p>These posts match your search:</p>
+{% if post_list %}
+    <ul>
+    {% for post in post_list %}
+        <li>
+            <a href="{% url 'posts:post' post.id %}">{{ post.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

@@ -143,6 +143,15 @@ def choose_applications(request, post_id, application_id):
         "posts/applications.html",
         {'giver' : accepted.giver})
 
+class PostSearchView(generic.ListView):
+    model = Post
+    template_name = "posts/search_results.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        post_list = Post.objects.filter(req_skill__title__icontains=query)
+        return post_list
+
         
 
 

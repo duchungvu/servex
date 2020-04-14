@@ -7,9 +7,9 @@
 {% if post_list %}
     <ul>
     {% for post in post_list %}
-    {% if post.status == "PENDING" %}
+    {% comment %} {% if post.status == "PENDING" %} {% endcomment %}
     <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a></li>
-    {% endif %}
+    {% comment %} {% endif %} {% endcomment %}
     {% endfor %}
     </ul>
 {% endif %}
@@ -18,5 +18,5 @@
     
     <input name="q" type="text" placeholder="Search here" maxlength="40">
 </form>
-<p>Review a past giver</p><a href="{% url 'posts:review %}">here</a>
+<p>Review a past giver <a href="{% url 'posts:review' %}">here</a></p>
 {% endblock %}

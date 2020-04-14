@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import *
+from .forms import *
 from datetime import date
 
 class UserProfileTestCase(TestCase):
@@ -281,4 +282,20 @@ class PostListViewTestCase(TestCase):
         res = self.client.get('posts:post/1')
         self.assertEqual(res.status_code, 404)
 
-    
+class UserProfileCreationForm(TestCase):
+    def setUp(self):
+        skill0 = Skill.objects.create(
+            title="skill0",
+            description="Nothing yet"
+        )
+
+        self.user0 = UserProfile.objects.create(
+            username="user0",
+            email="user0@case.edu",
+            first_name="User",
+            last_name="Zero",
+            date_of_birth=date(2020, 3, 27),
+            has_skill=skill0)
+
+    # def test_normal(self):
+    #     UserProfileCreationForm(fields="user0")

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import UserProfileCreationForm, PostCreationForm
+from .forms import UserProfileCreationForm, PostCreationForm, ReviewForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -46,16 +46,6 @@ def user_logout(request):
     if request.user:
         logout(request)
     return render(request, 'users/login.html')
-
-
-class CreatePostView(LoginRequiredMixin, generic.CreateView):
-    form_class = PostCreationForm
-    success_url = reverse_lazy('posts:post-list')
-    template_name = 'posts/post_form.html'
-
-    def form_valid(self, form):
-        form.instance.seeker = self.request.user
-        return super().form_valid(form)
 
 
 def create_application(request, post_id):
@@ -152,6 +142,39 @@ class PostSearchView(generic.ListView):
         query = self.request.GET.get('q')
         post_list = Post.objects.filter(req_skill__title__icontains=query)
         return post_list
+
+def job_done(request, application_id):
+    if request.user:
+        current_appl = Application.objects.get(id=application_id)
+        current_post = current_appl.post
+        current_post.status ="DONE"
+
+    return render(
+        request,
+        "posts/done.html"
+    )
+
+class CreatePostView(LoginRequiredMixin, generic.CreateView):
+    form_class = PostCreationForm
+    success_url = reverse_lazy('posts:post-list')
+    template_name = 'posts/post_form.html'
+
+    def form_valid(self, form):
+        form.instance.seeker = self.request.user
+        return super().form_valid(form)
+
+class ReviewView(generic.CreateView):
+    form_class = ReviewForm
+    success_url = reverse_lazy('posts:post-list')
+    template_name = "posts/review.html"
+
+    def form_valid(self, form):
+        form.instance.seeker = self.request.user
+        return super().form_valid(form)
+
+    
+
+
 
         
 

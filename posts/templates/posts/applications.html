@@ -4,6 +4,7 @@
 <h1>Applications for {{ post.title }}</h1>
 {% if giver %}
     <p>{{ giver }} has accepted your request</p>
+    <a href="{% url 'posts:review' %}">Job's done!</a>
 {% else %}
     {% if application_list %}
         {% for application in application_list %}

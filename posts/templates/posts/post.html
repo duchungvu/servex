@@ -13,7 +13,7 @@
     {% if post.status == "PENDING"%}
         <strong><a href="{% url 'posts:apply' post.id %}">I want to help!</a></strong>
     {% else %}
-        This post is close
+        This post is closed
     {% endif %}
 {% endif %}
 {% endblock %}

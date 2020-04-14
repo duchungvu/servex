@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     return render(request,
-                'base.html',
+                'posts/index.html',
                 {'userprofile' : UserProfile.objects.all()})
 
 

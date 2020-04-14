@@ -7,7 +7,9 @@
 {% if post_list %}
     <ul>
     {% for post in post_list %}
+    {% if post.status == "PENDING" %}
     <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a></li>
+    {% endif %}
     {% endfor %}
     </ul>
 {% endif %}

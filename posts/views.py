@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from .models import Post, UserProfile, Application
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -78,7 +79,7 @@ class PostView(generic.DetailView):
     model = Post
     template_name = "posts/post.html"
 
-
+# @login_required
 class PostListView(generic.ListView):
     template_name = 'posts/post-list.html'
     context_object_name = 'post_list'

@@ -1,0 +1,7 @@
+[coverage:run]
+omit =
+   */node_modules/*
+   manage.py
+   */venv/*
+   posts/managers.py
+   posts/views.py

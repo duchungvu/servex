@@ -1,4 +1,4 @@
-from .models import UserProfile, Post
+from .models import UserProfile, Post, Review
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import DateInput
 from django.forms import ModelForm
@@ -44,5 +44,11 @@ class PostCreationForm(ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ('giver', 'post', 'ratings', 'comment')
+
 
 

@@ -31,14 +31,14 @@ class PostCreationForm(ModelForm):
                             )
                         )
 
-    def __init__(self, *args, **kwargs):
-         self.user = kwargs.pop('user',None)
-         super(PostCreationForm, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #      self.user = kwargs.pop('user')
+    #      super(PostCreationForm, self).__init__(*args, **kwargs)
 
     def clean_points(self):
         points = self.cleaned_data["points"]
-        # if points > self.user.points:
-        #     raise forms.ValidationError("Not enough points to create post")
+        # if not (self.user.can_create_post(self.instance)):
+        #    raise forms.ValidationError("Not enough points to create post")
         return points
 
     class Meta:

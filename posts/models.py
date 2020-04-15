@@ -28,6 +28,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     date_of_birth = models.DateField(default=date(1970, 1, 1))
     points = models.IntegerField(default=100)
     has_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True)
+    average_ratings = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -53,6 +54,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def can_apply_post(self, post):
         return self != post.seeker and post.seeker.points >= post.points and self.has_skill == post.req_skill
+
+    def get_average_ratings(self):
+        review_list = Review.objects.filter(giver=self.pk)
+        sum = 0
+        for review in review_list:
+            sum += review.ratings
+        if review_list.count() > 0:
+            return round(sum / review_list.count(), 1)
+        else:
+            return 0
 
     def get_absolute_url(self):
         return reverse('profile', args=[str(self.id)])

@@ -5,8 +5,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from .models import Post, UserProfile, Application
+from .models import Post, UserProfile, Application, Review
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 # Create your views here.
 def index(request):
@@ -134,6 +135,7 @@ def choose_applications(request, post_id, application_id):
         "posts/applications.html",
         {'giver' : accepted.giver})
 
+
 class PostSearchView(generic.ListView):
     model = Post
     template_name = "posts/search_results.html"
@@ -154,6 +156,7 @@ def job_done(request, application_id):
         "posts/done.html"
     )
 
+
 class CreatePostView(LoginRequiredMixin, generic.CreateView):
     form_class = PostCreationForm
     success_url = reverse_lazy('posts:post-list')
@@ -161,7 +164,10 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.seeker = self.request.user
+        if not form.instance.seeker.can_create_post(form.instance):
+            return HttpResponse("You don't have enough point to create this post")
         return super().form_valid(form)
+
 
 class ReviewView(generic.CreateView):
     form_class = ReviewForm
@@ -171,3 +177,15 @@ class ReviewView(generic.CreateView):
     def form_valid(self, form):
         form.instance.seeker = self.request.user
         return super().form_valid(form)
+
+
+# to view the list of review for user
+class UserReviewView(generic.ListView):
+    model = Review
+    context_object_name = 'review_list'
+    template_name = 'posts/review-list.html'
+
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        self.giver = UserProfile.objects.filter(pk=id)[0]
+        return Review.objects.filter(giver=self.giver)

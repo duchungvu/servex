@@ -27,5 +27,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('posts/', include('posts.urls')),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
+    path('profile/<int:pk>/review', views.UserReviewView.as_view(), name='review-list'),
     path('logout/', views.user_logout, name='logout')
 ]

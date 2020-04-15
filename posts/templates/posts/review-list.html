@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body_block %}
+<h1>Review list</h1>
+{% if review_list %}
+    <ul>
+        {% for review in review_list %}
+        <li>
+            <a>From {{ review.seeker }} for {{ review.post.title }}</a>
+            <p>Comment: {{ review.comment }}</p>
+            <p>Ratings: {{ review.ratings }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

@@ -5,4 +5,9 @@
 <p>DOB: {{ userprofile.date_of_birth }}</p>
 <p>Has Skill: {{ userprofile.has_skill }}</p>
 <p>Current Points: {{ userprofile.points }}</p>
+<p>Ratings: {{ userprofile.get_average_ratings }}</p>
+
+<p>Click <a href="{% url 'review-list' userprofile.id %}">here</a> to see reviews</p>
+
+
 {% endblock %}

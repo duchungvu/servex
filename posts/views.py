@@ -78,7 +78,7 @@ class PostListView(generic.ListView):
         return Post.objects.all()
 
 
-class ProfileView(generic.ListView):
+class ProfileView(generic.DetailView):
     model = UserProfile
     template_name = "posts/profile.html"
 
@@ -147,7 +147,7 @@ def job_done(request, application_id):
     if request.user:
         current_appl = Application.objects.get(id=application_id)
         current_post = current_appl.post
-        current_post.status ="DONE"
+        current_post.status ="ACCEPTED"
 
     return render(
         request,
@@ -171,13 +171,3 @@ class ReviewView(generic.CreateView):
     def form_valid(self, form):
         form.instance.seeker = self.request.user
         return super().form_valid(form)
-
-    
-
-
-
-        
-
-
-
-

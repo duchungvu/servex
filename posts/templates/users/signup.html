@@ -2,24 +2,27 @@
 {% load static %}
 
 {% block title_block %}
-    Sign Up
+Sign Up
 {% endblock %}
 
 {% block body_block %}
-    <h1>Sign Up for Nacsa</h1>
-    {% if registered %}
+<h1>Sign Up for Nacsa</h1>
+<div class="container-login100">
+    <div class="wrap-login100" style="width:600px">
+        {% if registered %}
         <strong>Thank you for signing up!</strong>
         <a href="{% url 'index' %}">Return to the homepage.</a><br />
-    {% else %}
-        <strong>Sign Up here!</strong><br />
+        {% else %}
+        <strong>Please sign up here!</strong><br />
         <form id="user_form" method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-        {{ form.as_p }}
+            {{ form.as_p }}
 
-        <input type="submit" name="submit" value="signup" />
-    </form>
-    {% endif %}
+            <input type="submit" name="submit" value="signup" />
+        </form>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
-    

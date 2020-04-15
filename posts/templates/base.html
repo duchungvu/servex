@@ -24,7 +24,11 @@
                 <a href="{% url 'login' %}">Login</a>
             {% endif %}
         </div>
-        {% block body_block %}
-        {% endblock %}
+        <div class="container-login100">
+            <div class="wrap-login100" style="width:600px">
+                {% block body_block %}
+                {% endblock %}
+            </div>
+        </div>
     </body>
 </html>

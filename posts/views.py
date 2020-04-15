@@ -62,7 +62,7 @@ def create_application(request, post_id):
                 return HttpResponse("You have already applied for a post")
         else:
             print("Seeker points: {0}, Post points: {1}, Giver points: {2}".format(seeker.points, current_post.points, current_giver.points))
-            return HttpResponse("Invalid points")
+            return HttpResponse("Not enough points or required skill")
     return render(request, 'posts/apply.html')
 
 

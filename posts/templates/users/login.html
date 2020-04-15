@@ -7,8 +7,8 @@
 
 {% block body_block %}
 <div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
+    {% comment %} <div class="container-login100">
+        <div class="wrap-login100"> {% endcomment %}
             <form id="login_form" method="post" action="{% url 'login' %}">
                 <span class="login100-form-title p-b-26">
                     Welcome to Nacsa
@@ -22,7 +22,7 @@
                 </div>
                 <input style="background-color:#f14e4e" type="submit" value="Log In">
             </form>
-        </div>
-    </div>
+        {% comment %} </div>
+    </div> {% endcomment %}
 </div>
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-<div class="container-login100">
-    <div class="wrap-login100" style="width:600px;text-align:center">
-        <h1>Welcome to Nacsa</h1>
+{% comment %} <div class="container-login100"> {% endcomment %}
+    {% comment %} <div class="wrap-login100" style="width:600px;text-align:center"> {% endcomment %}
+        <h1 style="text-align:center">Welcome to Nacsa</h1>
         <p>A service-exchange website that you can either seek or offer help to people
 in the community</p>
         {% if not user.is_authenticated %}
@@ -11,6 +11,6 @@ in the community</p>
         </br>
             New here? <a href="{% url 'signup' %}">Sign Up</a>
         {% endif %}
-    </div>
-</div>
+    {% comment %} </div> {% endcomment %}
+{% comment %} </div> {% endcomment %}
 {% endblock %}

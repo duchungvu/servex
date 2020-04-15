@@ -5,11 +5,18 @@
     <ul>
         {% for review in review_list %}
         <li>
-            <a>From {{ review.seeker }} for {{ review.post.title }}</a>
+            <a>From </a> 
+            <a href="{% url 'profile' review.seeker.id %}">{{ review.seeker }}</a>
+            <a> to </a>
+            <a href="{% url 'profile' review.giver.id%}">{{ review.giver }}</a> 
+            <a> for </a>
+            <a href="{% url 'posts:post' review.post.id %}">{{ review.post.title }}</a>
             <p>Comment: {{ review.comment }}</p>
             <p>Ratings: {{ review.ratings }}</p>
         </li>
         {% endfor %}
     </ul>
+{% else %}
+    <p>No review for this user yet</p>
 {% endif %}
 {% endblock %}

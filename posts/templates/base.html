@@ -17,7 +17,7 @@
             <a href="{% url 'index' %}">About</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'posts:post-list' %}">Home</a>
-                <a href="{% url 'profile' user.id %}">Your Profile</a>
+                <a href="{% url 'profile' user.id %}">{{ user.first_name }} {{ user.last_name }}</a>
                 <a href="{% url 'logout' %}">Log out</a>
             {% else %}
                 <a href="{% url 'signup' %}">Sign Up</a>

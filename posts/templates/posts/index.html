@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-<div class="container-login100">
-    <div class="wrap-login100" style="width:600px;text-align:center">
-        <h1>Welcome to Nacsa</h1>
-        <p>A service-exchange website that you can either seek or offer help to people
+    <h1 style="text-align:center">Welcome to Nacsa</h1>
+    <p>A service-exchange website that you can either seek or offer help to people
 in the community</p>
-        {% if not user.is_authenticated %}
+    {% if not user.is_authenticated %}
         <a href="{% url 'login' %}">Login</a>
         </br>
-            New here? <a href="{% url 'signup' %}">Sign Up</a>
-        {% endif %}
-    </div>
-</div>
+        New here? <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
 {% endblock %}

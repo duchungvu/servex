@@ -1,22 +1,21 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-
-<p><a href="{% url 'posts:post-create' %}">Create a new post</a></p>
-<p>Here is the list of post</p>
-{% if post_list %}
-    <ul>
-    {% for post in post_list %}
-    {% comment %} {% if post.status == "PENDING" %} {% endcomment %}
-    <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a></li>
-    {% comment %} {% endif %} {% endcomment %}
-    {% endfor %}
-    </ul>
-{% endif %}
-<p>You can search for a post here:</p>
-<form action="{% url 'posts:search-result' %}" method=get> 
-    
-    <input name="q" type="text" placeholder="Search here" maxlength="40">
-</form>
-<p>Review a past giver <a href="{% url 'posts:review' %}">here</a></p>
+    <p>You can search for a post here:</p>
+    <form action="{% url 'posts:search-result' %}" method=get> 
+        <input name="q" type="text" placeholder="Search here" maxlength="40">
+    </form>
+    </br>
+    <p><a href="{% url 'posts:post-create' %}">Create a new post</a></p>
+    <p>Here is the list of available posts:</p>
+    {% if post_list %}
+        <ul>
+            {% for post in post_list %}
+                {% if post.status == "PENDING" %}
+                    <li><a href="{% url 'posts:post' post.id %}">{{ post.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Review a past giver <a href="{% url 'posts:review' %}">here</a></p>
 {% endblock %}

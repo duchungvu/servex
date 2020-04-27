@@ -1,21 +1,18 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-<h1>Job Review</h1>
-<p>The job has been done! We hope you enjoy the service!</p>
-
+    <h1>Job Review</h1>
+    <p>The job has been done! We hope you enjoy the service!</p>
     {% if user.is_authenticated %}
-    <strong>Write your giver a review: </strong><br />
-    <form id="review_form" method="post" action="{% url 'posts:review' %}" enctype="multipart/form-data">
+        <strong>Write your giver a review: </strong><br />
+        <form id="review_form" method="post" action="{% url 'posts:review' %}" enctype="multipart/form-data">
 
-        {% csrf_token %}
-        {{ form.as_p }}
+            {% csrf_token %}
+            {{ form.as_p }}
 
-    <input type="submit" name="submit" value="Finish Review"/>
-    </form>
+        <input type="submit" name="submit" value="Finish Review"/>
+        </form>
     {% else %}
         <strong>Please log in first to write review!</strong><br/>
     {% endif %}
-
-
 {% endblock %}

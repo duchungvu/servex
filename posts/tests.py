@@ -296,6 +296,3 @@ class UserProfileCreationForm(TestCase):
             last_name="Zero",
             date_of_birth=date(2020, 3, 27),
             has_skill=skill0)
-
-    # def test_normal(self):
-    #     UserProfileCreationForm(fields="user0")

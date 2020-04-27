@@ -4,13 +4,8 @@ from django.forms.widgets import DateInput
 from django.forms import ModelForm
 from django import forms
 
-# class UserForm(forms.ModelForm):
-#     password = forms.CharField(widget=forms.PasswordInput())
 
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'first_name', 'last_name', 'password')
-
+# A class that represents sign up form
 class UserProfileCreationForm(UserCreationForm):  
     email = forms.EmailField(required = False)
 
@@ -21,6 +16,8 @@ class UserProfileCreationForm(UserCreationForm):
             'date_of_birth': DateInput(attrs={'type': 'date'})
         }
 
+
+# A class that represents post form
 class PostCreationForm(ModelForm):
     description = forms.CharField(
                         required=False,
@@ -31,24 +28,25 @@ class PostCreationForm(ModelForm):
                             )
                         )
 
-    # def __init__(self, *args, **kwargs):
-    #      self.user = kwargs.pop('user')
-    #      super(PostCreationForm, self).__init__(*args, **kwargs)
-
     def clean_points(self):
         points = self.cleaned_data["points"]
-        # if not (self.user.can_create_post(self.instance)):
-        #    raise forms.ValidationError("Not enough points to create post")
         return points
 
     class Meta:
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
 
+
+<<<<<<< HEAD
+=======
+# A class that represents review form
+>>>>>>> 87b8b450a7f8fb29e4c933f32dfd44d29feab157
 class ReviewForm(ModelForm):
+    def clean_post(self):
+        post = self.cleaned_data["post"]
+        return post
+
+
     class Meta:
         model = Review
         fields = ('giver', 'post', 'ratings', 'comment')
-
-
-

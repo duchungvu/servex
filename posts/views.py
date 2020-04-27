@@ -9,19 +9,21 @@ from .models import Post, UserProfile, Application, Review
 from django.contrib.auth.decorators import login_required
 from django import forms
 
-# Create your views here.
+# Index page view
 def index(request):
     return render(request,
                 'posts/index.html',
                 {'userprofile' : UserProfile.objects.all()})
 
 
+# Sign up page view
 class SignUpView(generic.CreateView):
     form_class = UserProfileCreationForm
     success_url = reverse_lazy('login')
     template_name = 'users/signup.html'
 
 
+# Sign in page view
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -43,12 +45,14 @@ def user_login(request):
         return render(request, 'users/login.html')
 
 
+# Log out page view
 def user_logout(request):
     if request.user:
         logout(request)
     return render(request, 'users/login.html')
 
 
+# Create application view
 def create_application(request, post_id):
     if request.user: 
         current_giver = request.user
@@ -65,12 +69,12 @@ def create_application(request, post_id):
             return HttpResponse("Not enough points or required skill")
     return render(request, 'posts/apply.html')
 
-
+# Specific post view
 class PostView(generic.DetailView):
     model = Post
     template_name = "posts/post.html"
 
-# @login_required
+# List of posts view
 class PostListView(generic.ListView):
     template_name = 'posts/post-list.html'
     context_object_name = 'post_list'
@@ -78,12 +82,13 @@ class PostListView(generic.ListView):
     def get_queryset(self):
         return Post.objects.all()
 
-
+# User profile view
 class ProfileView(generic.DetailView):
     model = UserProfile
     template_name = "posts/profile.html"
 
 
+# Application view
 class ApplicationView(generic.ListView):
     model = Application
     template_name = "posts/applications.html"
@@ -105,6 +110,7 @@ class ApplicationView(generic.ListView):
         return context
 
     
+# Specific pplication view
 def choose_applications(request, post_id, application_id):
     # the chosen application
     accepted = Application.objects.get(id=application_id)
@@ -136,9 +142,10 @@ def choose_applications(request, post_id, application_id):
         {'giver' : accepted.giver})
 
 
+# Search view
 class PostSearchView(generic.ListView):
     model = Post
-    template_name = "posts/search_results.html"
+    template_name = "posts/search-results.html"
 
     def get_queryset(self):
         query = self.request.GET.get('q')
@@ -157,10 +164,11 @@ def job_done(request, application_id):
     )
 
 
+# Create a post view
 class CreatePostView(LoginRequiredMixin, generic.CreateView):
     form_class = PostCreationForm
     success_url = reverse_lazy('posts:post-list')
-    template_name = 'posts/post_form.html'
+    template_name = 'posts/post-form.html'
 
     def form_valid(self, form):
         form.instance.seeker = self.request.user
@@ -169,6 +177,7 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
+# Review view
 class ReviewView(generic.CreateView):
     form_class = ReviewForm
     success_url = reverse_lazy('posts:post-list')
@@ -179,7 +188,7 @@ class ReviewView(generic.CreateView):
         return super().form_valid(form)
 
 
-# to view the list of review for user
+# View the list of review for user
 class UserReviewView(generic.ListView):
     model = Review
     context_object_name = 'review_list'

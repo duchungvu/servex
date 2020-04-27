@@ -6,23 +6,19 @@
 {% endblock %}
 
 {% block body_block %}
-<div class="limiter">
-    {% comment %} <div class="container-login100">
-        <div class="wrap-login100"> {% endcomment %}
-            <form id="login_form" method="post" action="{% url 'login' %}">
-                <span class="login100-form-title p-b-26">
-                    Welcome to Nacsa
-                </span>
-                {% csrf_token %}
-                <div class="wrap-input100">
-                    <input class="input100" type="text" name="username" size="50" placeholder="Username"/>
-                </div>
-                <div class="wrap-input100">
-                    <input class="input100" type="password" name="password" size="50" placeholder="Password"/>
-                </div>
-                <input style="background-color:#f14e4e" type="submit" value="Log In">
-            </form>
-        {% comment %} </div>
-    </div> {% endcomment %}
-</div>
+    <div class="limiter">
+        <form id="login_form" method="post" action="{% url 'login' %}">
+            <span class="login100-form-title p-b-26">
+                Welcome to Nacsa
+            </span>
+            {% csrf_token %}
+            <div class="wrap-input100">
+                <input class="input100" type="text" name="username" size="50" placeholder="Username"/>
+            </div>
+            <div class="wrap-input100">
+                <input class="input100" type="password" name="password" size="50" placeholder="Password"/>
+            </div>
+            <input style="background-color:#f14e4e" type="submit" value="Log In">
+        </form>
+    </div>
 {% endblock %}

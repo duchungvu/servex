@@ -37,20 +37,14 @@ cd Nacsa
 ```
 - Create a virtual environment and install dependencies
 ```
-virtualenv venv # create a virtual env
-. venv/bin/activate # activate it
+virtualenv venv                 # create a virtual env
+. venv/bin/activate             # activate it
 pip install -r requirements.txt # install dependencies
 ```
 - Make sure Django is installed on your machine and run it!
 ```
 python manage.py runserver
 ```
-
-## 📋 Todo
-
-## 👏 How to contribute
-
-## 🎉 Acknowledgements
 
 ## 👨‍💻 Contributors
 - [Hung Vu](https://github.com/duchungvu)

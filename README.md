@@ -5,19 +5,13 @@ Not another CS App
 ## 📚 Table of contents
 
 - [Technical stack](#technical-stack)
-  - [Frontend](#frontend)
   - [Backend](#backend)
 - [Features](#features)
 - [Installation](#installation)
-- [Todo](#todo)
-- [How to contribute](#how-to-contribute)
-- [Acknowledgements](#acknowledgements)
 - [Contributors](#contributors)
 - [License](#license)
 
 ## 🛠 Technical stack
-
-### 📙 Frontend
 
 ### ⚙ Backend
 - Web framework: [Django](https://www.djangoproject.com/)

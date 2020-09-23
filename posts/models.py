@@ -125,7 +125,7 @@ class Review(models.Model):
         default=1,
         validators=[MaxValueValidator(5), MinValueValidator(1)]
     )
-<<<<<<< HEAD
+
     comment = models.CharField(max_length=140, default="No comment")
 
     def __str__(self):
@@ -135,12 +135,4 @@ class Review(models.Model):
     # def match(self, post, giver):
     #     post_checklist = Post.objects.filter(seeker=self.seeker.pk)
     #     if 
-
-
-
-
-
-
-=======
     comment = models.CharField(max_length=140, default="No comment")
->>>>>>> 87b8b450a7f8fb29e4c933f32dfd44d29feab157

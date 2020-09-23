@@ -36,17 +36,8 @@ class PostCreationForm(ModelForm):
         model = Post
         fields = ('title', 'description', 'points', 'req_skill')
 
-
-<<<<<<< HEAD
-=======
 # A class that represents review form
->>>>>>> 87b8b450a7f8fb29e4c933f32dfd44d29feab157
 class ReviewForm(ModelForm):
-    def clean_post(self):
-        post = self.cleaned_data["post"]
-        return post
-
-
     class Meta:
         model = Review
         fields = ('giver', 'post', 'ratings', 'comment')

@@ -1,4 +1,4 @@
-# [Nacsa](https://github.com/duchungvu/Nacsa) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duchungvu/Nacsa/blob/master/LICENSE) 
+# [ServEx](https://github.com/duchungvu/ServEx) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duchungvu/ServEx/blob/master/LICENSE) 
 
 Not another CS App
 
@@ -26,8 +26,8 @@ Not another CS App
 - First, you should have Python 3 installed on your machine
 - Clone this project into your local machine:
 ```
-git clone https://github.com/duchungvu/Nacsa.git
-cd Nacsa
+git clone https://github.com/duchungvu/ServEx.git
+cd ServEx
 ```
 - Create a virtual environment and install dependencies
 ```
@@ -48,4 +48,4 @@ python manage.py runserver
 
 ## 📄 License
 
-Nacsa is [MIT licensed](./LICENSE).
+ServEx is [MIT licensed](./LICENSE).

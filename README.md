@@ -1,4 +1,4 @@
-# [ServEx](https://github.com/duchungvu/ServEx) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duchungvu/ServEx/blob/master/LICENSE) 
+# [servex](https://github.com/duchungvu/servex) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duchungvu/servex/blob/master/LICENSE) 
 
 Not another CS App
 
@@ -26,8 +26,8 @@ Not another CS App
 - First, you should have Python 3 installed on your machine
 - Clone this project into your local machine:
 ```
-git clone https://github.com/duchungvu/ServEx.git
-cd ServEx
+git clone https://github.com/duchungvu/servex.git
+cd servex
 ```
 - Create a virtual environment and install dependencies
 ```
